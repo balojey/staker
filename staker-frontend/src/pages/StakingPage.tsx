@@ -1,3 +1,4 @@
+import BalanceDisplay from '@/features/wallet/BalanceDisplay';
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletConnect } from '@/components/WalletConnect';
-import { Skeleton } from '@/components/ui/skeleton';
+
+// TODO: Replace with actual token mint address from config
+const STAKABLE_TOKEN_MINT = 'So11111111111111111111111111111111111111112'; 
 
 export function StakingPage() {
   const { connected } = useWallet();
@@ -75,11 +78,7 @@ export function StakingPage() {
                     <p className="text-sm text-muted-foreground">Available to stake</p>
                   </div>
                   <div className="text-right">
-                    {true ? ( // Simulate loading state
-                      <Skeleton className="h-6 w-20" />
-                    ) : (
-                      <p className="font-medium">125.50 SOL</p>
-                    )}
+                    <BalanceDisplay tokenMintAddress={STAKABLE_TOKEN_MINT} />
                   </div>
                 </div>
                 
@@ -130,11 +129,7 @@ export function StakingPage() {
                     <p className="text-sm text-muted-foreground">Currently staked</p>
                   </div>
                   <div className="text-right">
-                    {true ? ( // Simulate loading state
-                      <Skeleton className="h-6 w-20" />
-                    ) : (
-                      <p className="font-medium">50.25 SOL</p>
-                    )}
+                    <p className="font-medium">50.25 SOL</p>
                   </div>
                 </div>
                 
@@ -144,11 +139,7 @@ export function StakingPage() {
                     <p className="text-sm text-muted-foreground">Available to claim</p>
                   </div>
                   <div className="text-right">
-                    {true ? ( // Simulate loading state
-                      <Skeleton className="h-6 w-20" />
-                    ) : (
-                      <p className="font-medium">2.15 SOL</p>
-                    )}
+                    <p className="font-medium">2.15 SOL</p>
                   </div>
                 </div>
                 
