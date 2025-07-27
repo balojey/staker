@@ -185,4 +185,29 @@ button:focus-visible {
   #root {
     @apply h-full;
   }
+  
+  /* Add smooth transitions for interactive elements */
+  button, a, input, select, textarea {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  /* Improve card shadows for depth */
+  .card {
+    @apply shadow-sm hover:shadow-md;
+  }
+  
+  /* Add a subtle gradient to primary buttons */
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-primary/90;
+  }
+  
+  /* Improve focus states for accessibility */
+  button:focus, a:focus, input:focus, select:focus, textarea:focus {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background outline-none;
+  }
+  
+  /* Add a subtle animation to cards on hover */
+  .animate-card {
+    @apply transition-transform duration-300 ease-in-out hover:-translate-y-1;
+  }
 }

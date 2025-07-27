@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Coins } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { WalletConnect } from '@/components/WalletConnect';
 import { Link, useLocation } from 'react-router-dom';
@@ -27,12 +27,15 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur">
       <div className="flex h-16 items-center justify-between px-4 w-full">
         <div className="container flex items-center justify-between w-full">
           {/* Logo/Brand */}
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold">Staker</span>
+            <Coins className="h-8 w-8 text-primary" />
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Staker
+            </span>
           </div>
 
           {/* Desktop Navigation */}
@@ -41,8 +44,10 @@ export function Header() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname === link.path ? 'text-primary' : 'text-muted-foreground'
+                className={`text-sm font-medium transition-colors hover:text-primary px-2 py-1 rounded-md ${
+                  location.pathname === link.path 
+                    ? 'text-primary bg-primary/10' 
+                    : 'text-muted-foreground hover:bg-muted'
                 }`}
               >
                 {link.name}
@@ -70,13 +75,15 @@ export function Header() {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden border-t bg-background w-full">
-          <div className="container flex flex-col py-4 px-4 gap-4">
+          <div className="container flex flex-col py-4 px-4 gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname === link.path ? 'text-primary' : 'text-muted-foreground'
+                className={`text-sm font-medium transition-colors px-3 py-2 rounded-md ${
+                  location.pathname === link.path 
+                    ? 'text-primary bg-primary/10' 
+                    : 'text-muted-foreground hover:bg-muted'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >

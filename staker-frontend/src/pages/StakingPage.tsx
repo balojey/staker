@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletConnect } from '@/components/WalletConnect';
+import { Coins, TrendingUp, Wallet } from 'lucide-react';
 
 // TODO: Replace with actual token mint address from config
 const STAKABLE_TOKEN_MINT = 'So11111111111111111111111111111111111111112'; 
@@ -37,8 +38,11 @@ export function StakingPage() {
 
   return (
     <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold">Stake Tokens</h1>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <Coins className="h-8 w-8 text-primary" />
+          Stake Tokens
+        </h1>
         <p className="text-muted-foreground">
           Stake your SOL tokens to earn rewards over time.
         </p>
@@ -59,7 +63,10 @@ export function StakingPage() {
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>Staking Pool</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              Staking Pool
+            </CardTitle>
             <CardDescription>
               Stake SOL tokens to earn rewards
             </CardDescription>
@@ -71,11 +78,14 @@ export function StakingPage() {
                 <TabsTrigger value="unstake">Unstake/Claim</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="stake" className="space-y-4 pt-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium">Your Balance</h3>
-                    <p className="text-sm text-muted-foreground">Available to stake</p>
+              <TabsContent value="stake" className="space-y-6 pt-4">
+                <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Wallet className="h-5 w-5 text-muted-foreground" />
+                    <div>
+                      <h3 className="font-medium">Your Balance</h3>
+                      <p className="text-sm text-muted-foreground">Available to stake</p>
+                    </div>
                   </div>
                   <div className="text-right">
                     <BalanceDisplay tokenMintAddress={STAKABLE_TOKEN_MINT} />
@@ -104,7 +114,7 @@ export function StakingPage() {
                       placeholder="0.00"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="pr-16"
+                      className="pr-16 py-6 text-lg"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-muted-foreground">
                       SOL
@@ -112,34 +122,39 @@ export function StakingPage() {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">APY</span>
-                  <span className="font-medium">8.5%</span>
+                <div className="flex items-center justify-between text-sm p-4 bg-muted rounded-lg">
+                  <span className="text-muted-foreground flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" />
+                    Annual Percentage Yield
+                  </span>
+                  <span className="font-bold text-lg">8.5%</span>
                 </div>
                 
-                <Button className="w-full" onClick={handleStake}>
+                <Button className="w-full py-6 text-lg" onClick={handleStake}>
                   Stake Tokens
                 </Button>
               </TabsContent>
               
-              <TabsContent value="unstake" className="space-y-4 pt-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium">Staked Balance</h3>
-                    <p className="text-sm text-muted-foreground">Currently staked</p>
+              <TabsContent value="unstake" className="space-y-6 pt-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <div>
+                      <h3 className="font-medium">Staked Balance</h3>
+                      <p className="text-sm text-muted-foreground">Currently staked</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-lg">50.25 SOL</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-medium">50.25 SOL</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium">Rewards</h3>
-                    <p className="text-sm text-muted-foreground">Available to claim</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium">2.15 SOL</p>
+                  
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <div>
+                      <h3 className="font-medium">Rewards</h3>
+                      <p className="text-sm text-muted-foreground">Available to claim</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-lg">2.15 SOL</p>
+                    </div>
                   </div>
                 </div>
                 
@@ -154,7 +169,7 @@ export function StakingPage() {
                       placeholder="0.00"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="pr-16"
+                      className="pr-16 py-6 text-lg"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-muted-foreground">
                       SOL
@@ -163,10 +178,10 @@ export function StakingPage() {
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button className="flex-1" onClick={handleUnstake}>
+                  <Button className="flex-1 py-6 text-lg" onClick={handleUnstake}>
                     Unstake
                   </Button>
-                  <Button className="flex-1" variant="secondary" onClick={handleClaim}>
+                  <Button className="flex-1 py-6 text-lg" variant="secondary" onClick={handleClaim}>
                     Claim Rewards
                   </Button>
                 </div>

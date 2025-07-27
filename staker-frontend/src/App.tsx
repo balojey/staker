@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { Toaster } from 'sonner';
 import('@solana/wallet-adapter-react-ui/styles.css' as any);
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
               </Route>
             </Routes>
           </Router>
+          <Toaster position="bottom-right" richColors />
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

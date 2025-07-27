@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletConnect } from '@/components/WalletConnect';
-import { ChevronDown, ArrowUpDown } from 'lucide-react';
+import { ChevronDown, ArrowUpDown, SwatchBook } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const TOKENS = [
@@ -41,8 +41,11 @@ export function SwapPage() {
 
   return (
     <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold">Swap Tokens</h1>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <SwatchBook className="h-8 w-8 text-primary" />
+          Swap Tokens
+        </h1>
         <p className="text-muted-foreground">
           Exchange tokens at the best rates on Solana.
         </p>
@@ -61,16 +64,19 @@ export function SwapPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card>
+        <Card className="animate-card">
           <CardHeader>
-            <CardTitle>Token Swap</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <SwatchBook className="h-5 w-5" />
+              Token Swap
+            </CardTitle>
             <CardDescription>
               Exchange your tokens at competitive rates
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* You Pay Section */}
-            <div className="space-y-4">
+            <div className="space-y-4 p-4 bg-muted rounded-lg">
               <div className="text-sm font-medium">You Pay</div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -78,7 +84,7 @@ export function SwapPage() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" className="w-[120px] justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="bg-muted rounded-full w-5 h-5 flex items-center justify-center">
+                          <div className="bg-background rounded-full w-6 h-6 flex items-center justify-center">
                             <span className="text-xs font-medium">{payToken.symbol.charAt(0)}</span>
                           </div>
                           <span>{payToken.symbol}</span>
@@ -93,7 +99,7 @@ export function SwapPage() {
                           onClick={() => setPayToken(token)}
                         >
                           <div className="flex items-center gap-2">
-                            <div className="bg-muted rounded-full w-5 h-5 flex items-center justify-center">
+                            <div className="bg-background rounded-full w-6 h-6 flex items-center justify-center">
                               <span className="text-xs font-medium">{token.symbol.charAt(0)}</span>
                             </div>
                             <div>
@@ -112,6 +118,7 @@ export function SwapPage() {
                       placeholder="0.00"
                       value={payAmount}
                       onChange={(e) => setPayAmount(e.target.value)}
+                      className="py-5 text-lg"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-muted-foreground">
                       {true ? ( // Simulate loading state
@@ -130,15 +137,15 @@ export function SwapPage() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full h-10 w-10 border-2"
                 onClick={switchTokens}
               >
-                <ArrowUpDown className="h-4 w-4" />
+                <ArrowUpDown className="h-5 w-5" />
               </Button>
             </div>
 
             {/* You Receive Section */}
-            <div className="space-y-4">
+            <div className="space-y-4 p-4 bg-muted rounded-lg">
               <div className="text-sm font-medium">You Receive</div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -146,7 +153,7 @@ export function SwapPage() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" className="w-[120px] justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="bg-muted rounded-full w-5 h-5 flex items-center justify-center">
+                          <div className="bg-background rounded-full w-6 h-6 flex items-center justify-center">
                             <span className="text-xs font-medium">{receiveToken.symbol.charAt(0)}</span>
                           </div>
                           <span>{receiveToken.symbol}</span>
@@ -161,7 +168,7 @@ export function SwapPage() {
                           onClick={() => setReceiveToken(token)}
                         >
                           <div className="flex items-center gap-2">
-                            <div className="bg-muted rounded-full w-5 h-5 flex items-center justify-center">
+                            <div className="bg-background rounded-full w-6 h-6 flex items-center justify-center">
                               <span className="text-xs font-medium">{token.symbol.charAt(0)}</span>
                             </div>
                             <div>
@@ -180,6 +187,7 @@ export function SwapPage() {
                       placeholder="0.00"
                       value={receiveAmount}
                       onChange={(e) => setReceiveAmount(e.target.value)}
+                      className="py-5 text-lg"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-muted-foreground">
                       {true ? ( // Simulate loading state
@@ -194,7 +202,7 @@ export function SwapPage() {
             </div>
 
             {/* Exchange Rate */}
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-sm p-3 bg-background rounded-md">
               <span className="text-muted-foreground">Exchange Rate</span>
               {true ? ( // Simulate loading state
                 <Skeleton className="h-4 w-24" />
@@ -204,7 +212,7 @@ export function SwapPage() {
             </div>
 
             {/* Fees */}
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-sm p-3 bg-background rounded-md">
               <span className="text-muted-foreground">Network Fee</span>
               {true ? ( // Simulate loading state
                 <Skeleton className="h-4 w-16" />
@@ -213,7 +221,7 @@ export function SwapPage() {
               )}
             </div>
 
-            <Button className="w-full" onClick={handleSwap}>
+            <Button className="w-full py-6 text-lg" onClick={handleSwap}>
               Swap Tokens
             </Button>
           </CardContent>
