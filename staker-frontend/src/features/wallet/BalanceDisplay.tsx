@@ -1,14 +1,13 @@
 import React from 'react';
-import { useTokenBalance } from './useTokenBalance';
+import { useSolBalance } from './useSolBalance';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface BalanceDisplayProps {
-  tokenMintAddress: string;
   label?: string;
 }
 
-const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ tokenMintAddress, label = 'Balance' }) => {
-  const { balance, loading } = useTokenBalance(tokenMintAddress);
+const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ label = 'Balance' }) => {
+  const { balance, loading } = useSolBalance();
 
   if (loading) {
     return <Skeleton className="h-6 w-20" />;

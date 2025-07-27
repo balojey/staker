@@ -88,7 +88,7 @@ export function StakingPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <BalanceDisplay tokenMintAddress={STAKABLE_TOKEN_MINT} />
+                    <BalanceDisplay />
                   </div>
                 </div>
                 
