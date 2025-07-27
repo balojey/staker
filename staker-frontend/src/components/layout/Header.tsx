@@ -1,0 +1,91 @@
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { WalletConnect } from '@/components/WalletConnect';
+import { Link, useLocation } from 'react-router-dom';
+
+export function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Close mobile menu when resizing to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const navLinks = [
+    { name: 'Dashboard', path: '/' },
+    { name: 'Stake', path: '/stake' },
+    { name: 'Swap', path: '/swap' },
+  ];
+
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
+      <div className="flex h-16 items-center justify-between px-4 w-full">
+        <div className="container flex items-center justify-between w-full">
+          {/* Logo/Brand */}
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold">Staker</span>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  location.pathname === link.path ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Wallet Connect */}
+          <div className="flex items-center gap-2">
+            <WalletConnect />
+            
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden border-t bg-background w-full">
+          <div className="container flex flex-col py-4 px-4 gap-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  location.pathname === link.path ? 'text-primary' : 'text-muted-foreground'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
