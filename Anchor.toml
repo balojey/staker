@@ -6,13 +6,13 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-anchor_spl_stake_pool = "5wet8ypoZZNBPStYr988XGMt9uvPWTHNb9Vfin5nvmGU"
+anchor_spl_stake_pool = "4QbLgtaR4pjTetsyUS7Lqfu8DYQCgKmL5X7ihYgFeTCp"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

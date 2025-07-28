@@ -14,8 +14,8 @@ const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ
 const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
 
 // --- Placeholders for your specific addresses ---
-const STAKE_POOL_ADDRESS = new PublicKey('5wet8ypoZZNBPStYr988XGMt9uvPWTHNb9Vfin5nvmGU'); // The main stake pool account address
-const STAKE_POOL_PROGRAM_ID = new PublicKey('5wet8ypoZZNBPStYr988XGMt9uvPWTHNb9Vfin5nvmGU'); // The Program ID
+const STAKE_POOL_ADDRESS = new PublicKey('4QbLgtaR4pjTetsyUS7Lqfu8DYQCgKmL5X7ihYgFeTCp'); // The main stake pool account address
+export const STAKE_POOL_PROGRAM_ID = new PublicKey('4QbLgtaR4pjTetsyUS7Lqfu8DYQCgKmL5X7ihYgFeTCp'); // The Program ID
 
 /**
  * Stake SOL into the stake pool. This version has no dependency on @solana/spl-token.
@@ -38,6 +38,7 @@ export async function stakeSol(
 
     const amountInLamports = new BN(amountInSol * LAMPORTS_PER_SOL);
     const accountInfo = await program.provider.connection.getAccountInfo(STAKE_POOL_ADDRESS);
+    console.log('Stake Pool Account Info:', accountInfo);
     if (!accountInfo) {
       throw new Error('Stake pool account not found!');
     }

@@ -9,6 +9,8 @@ import { useConnection } from '@solana/wallet-adapter-react';
 import { WalletConnect } from '@/components/WalletConnect';
 import { Coins, TrendingUp, Wallet } from 'lucide-react';
 import { stakeSol } from '@/features/staking/staking-service';
+import { Program, AnchorProvider } from '@coral-xyz/anchor';
+import { ANCHOR_SPL_STAKE_POOL_IDL, type AnchorSplStakePool } from '@/idl/anchor_spl_stake_pool';
 import { toast } from 'sonner';
 
 export function StakingPage() {
@@ -18,6 +20,8 @@ export function StakingPage() {
   const [activeTab, setActiveTab] = useState('stake');
   const [isStaking, setIsStaking] = useState(false);
   const balanceRefreshRef = useRef<() => void>(() => {});
+  const provider = new AnchorProvider(connection, wallet as any, {});
+  const program = new Program<AnchorSplStakePool>(ANCHOR_SPL_STAKE_POOL_IDL, provider);
 
   const handleMax = () => {
     // In a real app, this would be the user's balance
@@ -32,7 +36,7 @@ export function StakingPage() {
 
     setIsStaking(true);
     try {
-      const signature = await stakeSol(connection, wallet, parseFloat(amount));
+      const signature = await stakeSol(connection, wallet, program, parseFloat(amount));
       toast.success(`Staking successful! Transaction: ${signature.substring(0, 10)}...`);
       
       // Refresh balances after successful transaction
