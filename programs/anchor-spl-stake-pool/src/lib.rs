@@ -8,7 +8,7 @@ use utils::state::PreferredValidatorType;
 mod instructions;
 mod utils;
 
-declare_id!("5wet8ypoZZNBPStYr988XGMt9uvPWTHNb9Vfin5nvmGU");
+declare_id!("4QbLgtaR4pjTetsyUS7Lqfu8DYQCgKmL5X7ihYgFeTCp");
 
 #[program]
 pub mod anchor_spl_stake_pool {

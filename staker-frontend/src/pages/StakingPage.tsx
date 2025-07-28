@@ -76,7 +76,7 @@ export function StakingPage() {
         </p>
       </div>
 
-      {!wallet ? (
+      {!wallet.connected ? (
         <Card className="max-w-md mx-auto">
           <CardHeader>
             <CardTitle>Connect Your Wallet</CardTitle>
