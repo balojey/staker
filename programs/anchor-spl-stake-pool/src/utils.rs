@@ -25,7 +25,7 @@ pub fn get_pubkey(key: Pubkey) -> StakePubkey {
 }
 
 pub mod data {
-    use ::borsh::{self, BorshDeserialize};
+    use ::borsh::BorshDeserialize;
     use anyhow::Result;
     use spl_stake_pool::state::ValidatorList;
     use {anchor_lang::prelude::*, spl_stake_pool::state::StakePool};

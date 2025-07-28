@@ -9,7 +9,7 @@ import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { Toaster } from 'sonner';
-import('@solana/wallet-adapter-react-ui/styles.css' as any);
+import('@solana/wallet-adapter-react-ui/styles.css');
 
 function App() {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'

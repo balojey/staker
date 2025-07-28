@@ -1,29 +1,48 @@
 import BalanceDisplay from '@/features/wallet/BalanceDisplay';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useConnection } from '@solana/wallet-adapter-react';
 import { WalletConnect } from '@/components/WalletConnect';
 import { Coins, TrendingUp, Wallet } from 'lucide-react';
-
-// TODO: Replace with actual token mint address from config
-const STAKABLE_TOKEN_MINT = 'So11111111111111111111111111111111111111112'; 
+import { stakeSol } from '@/features/staking/staking-service';
+import { toast } from 'sonner';
 
 export function StakingPage() {
-  const { connected } = useWallet();
+  const wallet = useWallet();
+  const { connection } = useConnection();
   const [amount, setAmount] = useState('');
   const [activeTab, setActiveTab] = useState('stake');
+  const [isStaking, setIsStaking] = useState(false);
+  const balanceRefreshRef = useRef<() => void>(() => {});
 
   const handleMax = () => {
     // In a real app, this would be the user's balance
     setAmount('100');
   };
 
-  const handleStake = () => {
-    // In a real app, this would call the staking contract
-    console.log('Staking', amount);
+  const handleStake = async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      toast.error('Please enter a valid amount');
+      return;
+    }
+
+    setIsStaking(true);
+    try {
+      const signature = await stakeSol(connection, wallet, parseFloat(amount));
+      toast.success(`Staking successful! Transaction: ${signature.substring(0, 10)}...`);
+      
+      // Refresh balances after successful transaction
+      balanceRefreshRef.current();
+    } catch (error) {
+      console.error('Staking failed:', error);
+      toast.error(`Staking failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsStaking(false);
+    }
   };
 
   const handleUnstake = () => {
@@ -34,6 +53,11 @@ export function StakingPage() {
   const handleClaim = () => {
     // In a real app, this would claim rewards
     console.log('Claiming rewards');
+  };
+
+  const handleBalanceRefresh = () => {
+    // This function will be called when BalanceDisplay refreshes
+    console.log('Balance refreshed');
   };
 
   return (
@@ -48,7 +72,7 @@ export function StakingPage() {
         </p>
       </div>
 
-      {!connected ? (
+      {!wallet ? (
         <Card className="max-w-md mx-auto">
           <CardHeader>
             <CardTitle>Connect Your Wallet</CardTitle>
@@ -88,7 +112,7 @@ export function StakingPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <BalanceDisplay />
+                    <BalanceDisplay onRefresh={handleBalanceRefresh} />
                   </div>
                 </div>
                 
@@ -130,8 +154,15 @@ export function StakingPage() {
                   <span className="font-bold text-lg">8.5%</span>
                 </div>
                 
-                <Button className="w-full py-6 text-lg" onClick={handleStake}>
-                  Stake Tokens
+                <Button className="w-full py-6 text-lg" onClick={handleStake} disabled={isStaking}>
+                  {isStaking ? (
+                    <>
+                      <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
+                      Processing...
+                    </>
+                  ) : (
+                    'Stake Tokens'
+                  )}
                 </Button>
               </TabsContent>
               

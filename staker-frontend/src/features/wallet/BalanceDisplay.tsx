@@ -4,10 +4,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 interface BalanceDisplayProps {
   label?: string;
+  onRefresh?: () => void;
 }
 
-const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ label = 'Balance' }) => {
-  const { balance, loading } = useSolBalance();
+const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ label = 'Balance', onRefresh }) => {
+  const { balance, loading, refresh } = useSolBalance();
+
+  const handleRefresh = () => {
+    refresh();
+    onRefresh?.();
+  };
+
+  React.useEffect(() => {
+    // Refresh balance when component mounts
+    handleRefresh();
+  }, []);
 
   if (loading) {
     return <Skeleton className="h-6 w-20" />;
