@@ -53,7 +53,7 @@ export function WalletConnect() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="font-medium flex items-center gap-2">
+        <Button variant="outline" className="font-medium flex items-center gap-2 text-white">
           <Wallet className="h-4 w-4" />
           <span className="font-mono text-xs">{shortenedAddress}</span>
         </Button>

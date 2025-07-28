@@ -93,8 +93,8 @@ export function StakingPage() {
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="stake">Stake</TabsTrigger>
-                <TabsTrigger value="unstake">Unstake/Claim</TabsTrigger>
+                <TabsTrigger value="stake" className='text-white'>Stake</TabsTrigger>
+                <TabsTrigger value="unstake" className='text-white'>Unstake/Claim</TabsTrigger>
               </TabsList>
               
               <TabsContent value="stake" className="space-y-6 pt-4">
@@ -118,9 +118,9 @@ export function StakingPage() {
                     </label>
                     <Button 
                       type="button" 
-                      variant="ghost" 
+                      variant="ghost"
                       size="sm" 
-                      className="h-6 px-2 text-xs"
+                      className="h-6 px-2 text-xs text-white"
                       onClick={handleMax}
                     >
                       Max
