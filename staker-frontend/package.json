@@ -68,7 +68,9 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
     "vaul": "^1.1.2",
-    "zod": "^4.0.10"
+    "vite-plugin-node-polyfills": "^0.24.0",
+    "zod": "^4.0.10",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

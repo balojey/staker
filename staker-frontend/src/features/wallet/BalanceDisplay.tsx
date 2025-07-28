@@ -1,26 +1,26 @@
-import React from 'react';
-import { useSolBalance } from './useSolBalance';
+import React, { useEffect } from 'react';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { useBalanceStore } from '@/stores/useBalanceStore';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface BalanceDisplayProps {
   label?: string;
-  onRefresh?: () => void;
 }
 
-const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ label = 'Balance', onRefresh }) => {
-  const { balance, loading, refresh } = useSolBalance();
+const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ label = 'Balance' }) => {
+  // Get state and actions from the global Zustand store
+  const { solBalance, isLoading, fetchBalances } = useBalanceStore();
+  const { connection } = useConnection();
+  const { publicKey } = useWallet();
 
-  const handleRefresh = () => {
-    refresh();
-    onRefresh?.();
-  };
+  // Fetch balances when the component mounts or the wallet changes
+  useEffect(() => {
+    if (publicKey) {
+      fetchBalances(connection, publicKey);
+    }
+  }, [publicKey, connection, fetchBalances]);
 
-  React.useEffect(() => {
-    // Refresh balance when component mounts
-    handleRefresh();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <Skeleton className="h-6 w-20" />;
   }
 
@@ -28,7 +28,7 @@ const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ label = 'Balance', onRe
     <div className="flex flex-col items-end">
       <span className="text-sm text-muted-foreground">{label}</span>
       <span className="text-lg font-semibold">
-        {balance !== null ? balance.toFixed(4) : '0.0000'} SOL
+        {solBalance.toFixed(4)} SOL
       </span>
     </div>
   );

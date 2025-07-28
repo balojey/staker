@@ -23,12 +23,12 @@ export function Header() {
   const navLinks = [
     { name: 'Dashboard', path: '/' },
     { name: 'Stake', path: '/stake' },
-    { name: 'Swap', path: '/swap' },
+    // { name: 'Swap', path: '/swap' },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur">
-      <div className="flex h-16 items-center justify-between px-4 w-full">
+      <div className="flex h-16 items-center justify-between px-4 w-full mx-15">
         <div className="container flex items-center justify-between w-full">
           {/* Logo/Brand */}
           <div className="flex items-center gap-2">

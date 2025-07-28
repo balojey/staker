@@ -1,8 +1,16 @@
 {
-  "license": "ISC",
+  "name": "staker-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "staker-frontend",
+    "./"
+  ],
   "scripts": {
-    "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
+    "dev:ui": "npm run dev --workspace=staker-frontend",
+    "test:program": "npm test --workspace=.",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1"
