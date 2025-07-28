@@ -68,6 +68,13 @@ For a detailed overview of the architecture, please refer to the [Fullstack Arch
 -   **[Product Requirements Document (PRD)](./docs/prd.md):** Detailed information about the project's goals, features, and user stories.
 -   **[Fullstack Architecture Document](./docs/architecture.md):** A comprehensive guide to the technical architecture of the project.
 
+## 🖼️ Screenshots
+
+Here are some screenshots of the application in action:
+
+![Staker App Screenshot 1](./docs/images/staker1.png)
+![Staker App Screenshot 2](./docs/images/staker2.png)
+
 ## 📝 License
 
 This project is licensed under the MIT License.
